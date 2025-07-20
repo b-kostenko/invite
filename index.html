@@ -1,788 +1,604 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Богдан & Іра - Свадебное приглашение</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Playfair Display', serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Контейнер с соотношением сторон 4:3 */
-        .page-container {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .content-wrapper {
-            width: 75vw; /* 4:3 соотношение */
-            height: 100vh;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        /* Секции теперь занимают всю высоту контейнера */
-        .hero-section,
-        .info-section,
-        .location-section {
-            min-height: 100vh;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Первая страница - Hero секция */
-        .hero-section {
-            height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-                        url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-
-        .hero-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-
-        .couple-names {
-            font-size: 4rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            letter-spacing: 0.1em;
-        }
-
-        .wedding-date {
-            font-size: 1.5rem;
-            font-weight: 300;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            letter-spacing: 0.05em;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator::before {
-            content: '↓';
-            font-size: 2rem;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
-        }
-
-        /* Адаптивность для мобильных устройств */
-        @media (max-width: 768px) {
-            .couple-names {
-                font-size: 2.5rem;
-            }
-            
-            .wedding-date {
-                font-size: 1.2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .couple-names {
-                font-size: 2rem;
-            }
-            
-            .wedding-date {
-                font-size: 1rem;
-            }
-        }
-
-        /* Вторая страница - Информация */
-        .info-section {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 4rem 2rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            width: 100%;
-            padding: 0 2rem;
-        }
-
-        .welcome-text {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .welcome-text h2 {
-            font-size: 2.5rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-            color: #2c3e50;
-        }
-
-        .welcome-text p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #34495e;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .countdown-section {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .countdown-section h3 {
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 2rem;
-            color: #2c3e50;
-        }
-
-        .countdown-timer {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .countdown-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: white;
-            padding: 2rem 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            min-width: 120px;
-        }
-
-        .countdown-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #e74c3c;
-            margin-bottom: 0.5rem;
-        }
-
-        .countdown-label {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            font-weight: 500;
-        }
-
-        .calendar-section {
-            text-align: center;
-        }
-
-        .calendar-section h3 {
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 2rem;
-            color: #2c3e50;
-        }
-
-        .calendar {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .calendar-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .month {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .calendar-weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .calendar-weekdays span {
-            font-weight: 600;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-
-        .calendar-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-        }
-
-        .calendar-days span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            font-size: 1rem;
-            color: #2c3e50;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .wedding-day {
-            background: #e74c3c;
-            color: white !important;
-            font-weight: 700;
-            position: relative;
-        }
-
-        .wedding-day::after {
-            content: '❤';
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            font-size: 0.8rem;
-            color: #e74c3c;
-            background: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Адаптивность для второй страницы */
-        @media (max-width: 768px) {
-            .info-section {
-                padding: 3rem 1rem;
-            }
-
-            .welcome-text h2 {
-                font-size: 2rem;
-            }
-
-            .welcome-text p {
-                font-size: 1.1rem;
-            }
-
-            .countdown-timer {
-                gap: 1rem;
-                flex-wrap: nowrap;
-            }
-
-            .countdown-item {
-                padding: 1.5rem 1rem;
-                min-width: 100px;
-            }
-
-            .countdown-number {
-                font-size: 2.5rem;
-            }
-
-            .calendar {
-                padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .welcome-text h2 {
-                font-size: 1.8rem;
-            }
-
-            .countdown-timer {
-                flex-direction: row;
-                gap: 0.5rem;
-                flex-wrap: nowrap;
-            }
-
-            .countdown-item {
-                min-width: 80px;
-                padding: 1rem 0.5rem;
-            }
-
-            .countdown-number {
-                font-size: 1.8rem;
-            }
-
-            .countdown-label {
-                font-size: 0.7rem;
-            }
-        }
-
-        /* Дополнительные стили для очень маленьких экранов */
-        @media (max-width: 360px) {
-            .countdown-timer {
-                gap: 0.3rem;
-            }
-
-            .countdown-item {
-                min-width: 70px;
-                padding: 0.8rem 0.3rem;
-            }
-
-            .countdown-number {
-                font-size: 1.5rem;
-            }
-
-            .countdown-label {
-                font-size: 0.6rem;
-            }
-        }
-
-        /* Третья страница - Локация */
-        .location-section {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 4rem 2rem;
-            display: flex;
-            align-items: center;
-            color: white;
-        }
-
-        .location-content {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .location-content h2 {
-            font-size: 3rem;
-            font-weight: 400;
-            margin-bottom: 3rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .address-info {
-            margin-bottom: 4rem;
-        }
-
-        .address-info h3 {
-            font-size: 2rem;
-            font-weight: 400;
-            margin-bottom: 1rem;
-            color: #f8f9fa;
-        }
-
-        .address {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: #e9ecef;
-            line-height: 1.6;
-        }
-
-        .map-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #e74c3c;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .map-button:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .map-icon {
-            font-size: 1.2rem;
-        }
-
-        .schedule-section {
-            margin-bottom: 4rem;
-        }
-
-        .schedule-section h3 {
-            font-size: 2rem;
-            font-weight: 400;
-            margin-bottom: 2rem;
-            color: #f8f9fa;
-        }
-
-        .schedule-table {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .schedule-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .schedule-item:last-child {
-            border-bottom: none;
-        }
-
-        .time {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #f8f9fa;
-        }
-
-        .event {
-            font-size: 1.2rem;
-            color: #e9ecef;
-        }
-
-        .final-invitation {
-            margin-top: 4rem;
-        }
-
-        .invitation-image {
-            margin-bottom: 2rem;
-        }
-
-        .final-photo {
-            width: 300px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .invitation-text {
-            font-size: 1.8rem;
-            font-weight: 400;
-            color: #f8f9fa;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Адаптивность для третьей страницы */
-        @media (max-width: 768px) {
-            .location-section {
-                padding: 3rem 1rem;
-            }
-
-            .location-content h2 {
-                font-size: 2.5rem;
-            }
-
-            .address-info h3 {
-                font-size: 1.8rem;
-            }
-
-            .address {
-                font-size: 1.1rem;
-            }
-
-            .map-button {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
-            }
-
-            .schedule-section h3 {
-                font-size: 1.8rem;
-            }
-
-            .time {
-                font-size: 1.3rem;
-            }
-
-            .event {
-                font-size: 1.1rem;
-            }
-
-            .final-photo {
-                width: 250px;
-                height: 170px;
-            }
-
-            .invitation-text {
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .location-content h2 {
-                font-size: 2rem;
-            }
-
-            .schedule-table {
-                padding: 1.5rem;
-            }
-
-            .schedule-item {
-                flex-direction: column;
-                gap: 0.5rem;
-                text-align: center;
-            }
-
-            .final-photo {
-                width: 200px;
-                height: 140px;
-            }
-        }
-
-        /* Адаптивность для нового макета 4:3 */
-        @media (max-width: 1200px) {
-            .content-wrapper {
-                width: 85vw;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper {
-                width: 90vw;
-            }
-            
-            .container {
-                padding: 0 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .content-wrapper {
-                width: 95vw;
-            }
-            
-            .container {
-                padding: 0 0.5rem;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Запрошення на весілля — Богдан та Іра</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Marck+Script&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: #f7f3ed url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      color: #5a4632;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 24px 0 rgba(90,70,50,0.07);
+    }
+    .vintage-frame {
+      border: 3px solid #e2c9a0;
+      border-radius: 32px;
+      padding: 12px 0 0 0;
+      margin: 12px 8px 0 8px;
+      background: rgba(255,255,245,0.85);
+      box-shadow: 0 2px 16px 0 rgba(180,150,100,0.08);
+    }
+
+    /* ===== HEADER SECTION ===== */
+    .header {
+      text-align: center;
+      padding: 0;
+      margin-bottom: 24px;
+    }
+    .header-photo-container {
+      position: relative;
+      width: 100%;
+      height: 700px;
+      overflow: hidden;
+      border-radius: 0 0 32px 32px;
+    }
+    .header-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .header-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%);
+      color: #fff;
+      padding: 24px 18px;
+      box-sizing: border-box;
+    }
+    .header-names {
+      font-family: 'Marck Script', cursive;
+      font-size: 2.4rem;
+      color: #fff;
+      margin-bottom: 0;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .header-date {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 0;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .header-greeting {
+      font-size: 1.08rem;
+      color: #6d5c43;
+      margin-bottom: 0;
+      font-family: 'Marck Script', cursive;
+    }
+
+    /* ===== CALENDAR SECTION ===== */
+    .calendar-section {
+      text-align: center;
+      margin: 0 0 24px 0;
+    }
+    .calendar-header {
+      background: linear-gradient(135deg, #f8e6e8 0%, #f0d8e0 100%);
+      border-radius: 18px 18px 0 0;
+      padding: 12px 0;
+      margin-bottom: 0;
+      box-shadow: none;
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      width: 365px;
+      border: 2px solid #e2c9a0;
+      border-bottom: none;
+    }
+    .calendar-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="flowers" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="%23e8d0d8" opacity="0.3"/><circle cx="15" cy="8" r="1" fill="%23e8d0d8" opacity="0.2"/><circle cx="8" cy="15" r="1" fill="%23e8d0d8" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23flowers)"/></svg>');
+      opacity: 0.4;
+    }
+    .calendar-month {
+      font-family: 'Marck Script', cursive;
+      font-size: 1.4rem;
+      color: #a67c52;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+    .calendar-table {
+      display: inline-block;
+      background: #fff8f0;
+      border-radius: 0 0 18px 18px;
+      box-shadow: 0 2px 12px rgba(180,150,100,0.04);
+      padding: 14px 12px 8px 12px;
+      border: 2px solid #e2c9a0;
+      border-top: none;
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin-bottom: 8px;
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      margin-top: 0;
+    }
+    .calendar-table table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 1.01rem;
+    }
+    .calendar-table th, .calendar-table td {
+      width: 28px;
+      height: 28px;
+      text-align: center;
+      color: #a67c52;
+      position: relative;
+    }
+    .calendar-table th {
+      color: #b89c7a;
+      font-weight: 400;
+      font-size: 0.93rem;
+    }
+    .calendar-table .heart {
+      position: relative;
+      font-size: 1.2rem;
+      color: #d14c3b;
+      font-weight: 900;
+    }
+    .calendar-table .heart svg {
+      position: absolute;
+      left: calc(50% - 1px);
+      top: calc(50% + 1px);
+      transform: translate(-50%,-50%) rotate(18deg);
+      width: 44px;
+      height: 44px;
+      pointer-events: none;
+    }
+    .calendar-year {
+      font-size: 0.98rem;
+      color: #b89c7a;
+      margin-bottom: 0;
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* ===== TIMER SECTION ===== */
+    .timer-section {
+      text-align: center;
+      margin: 0 0 24px 0;
+    }
+    .timer-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: #b89c7a;
+      margin-bottom: 8px;
+    }
+    .timer {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.3rem;
+      color: #a67c52;
+      background: #fff8f0;
+      border-radius: 14px;
+      border: 2px solid #e2c9a0;
+      padding: 10px 0;
+      width: 365px;
+      margin: 0 auto 0 auto;
+      box-shadow: 0 2px 8px rgba(180,150,100,0.04);
+    }
+    .timer span {
+      min-width: 38px;
+      display: inline-block;
+    }
+    .timer-unit {
+      font-size: 0.8rem;
+      color: #b89c7a;
+      display: block;
+      margin-top: -2px;
+    }
+
+    /* ===== VENUE SECTION ===== */
+    .venue-section {
+      text-align: center;
+      margin: 0 0 24px 0;
+      padding-bottom: 12px;
+    }
+    .venue-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      color: #6b7c5e;
+      letter-spacing: 2px;
+      margin-bottom: 2px;
+      font-weight: 700;
+    }
+    .venue-subtitle {
+      font-size: 1.1rem;
+      color: #7d7d6b;
+      margin-bottom: 10px;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .venue-photo-wrap {
+      width: 100%;
+      max-width: 365px;
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(120,120,90,0.10);
+      background: transparent;
+      position: relative;
+    }
+    .venue-photo {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+    .venue-map-btn-round {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      background: #7c8c6b;
+      color: #fff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      border-radius: 50%;
+      border: 4px solid rgba(255,255,255,0.9);
+      box-shadow: 0 4px 16px 0 rgba(120,120,90,0.15);
+      margin: -60px auto 0 auto;
+      position: relative;
+      z-index: 2;
+      text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .venue-map-btn-round:hover {
+      background: #6b7c5e;
+      box-shadow: 0 6px 24px 0 rgba(120,120,90,0.20);
+    }
+
+    /* ===== DRESSCODE SECTION ===== */
+    .dresscode-section {
+      text-align: center;
+      margin: 0 0 24px 0;
+      padding: 0 18px;
+    }
+    .dresscode-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      color: #6b7c5e;
+      letter-spacing: 2px;
+      margin-bottom: 2px;
+      font-weight: 700;
+    }
+    .dresscode-subtitle {
+      font-family: 'Marck Script', cursive;
+      font-size: 1.1rem;
+      color: #a6a68a;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .dresscode-text {
+      font-size: 1.08rem;
+      color: #6d5c43;
+      margin-bottom: 18px;
+      font-family: 'Marck Script', cursive;
+      line-height: 1.4;
+      font-weight: 400;
+    }
+    .dresscode-colors {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+    .color-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 2px 8px rgba(120,120,90,0.08);
+    }
+
+    /* ===== SCHEDULE SECTION ===== */
+    .schedule-section {
+      text-align: center;
+      margin: 0 0 24px 0;
+    }
+    .schedule-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      color: #6b7c5e;
+      letter-spacing: 2px;
+      margin-bottom: 2px;
+      font-weight: 700;
+    }
+    .schedule-subtitle {
+      font-family: 'Marck Script', cursive;
+      font-size: 1.1rem;
+      color: #a6a68a;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    .schedule-pill {
+      display: flex;
+      background: #f8f6f0;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(120,120,90,0.06);
+    }
+    .schedule-time {
+      background: #e2d4c8;
+      color: #fff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 80px;
+    }
+    .schedule-desc {
+      background: #f8f6f0;
+      color: #6d5c43;
+      font-family: 'Marck Script', cursive;
+      font-size: 1.08rem;
+      font-weight: 400;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      flex: 1;
+      line-height: 1.4;
+    }
+
+    /* ===== GIFTS SECTION ===== */
+    .gifts-section {
+      text-align: center;
+      margin: 0 0 24px 0;
+      padding: 0 18px;
+    }
+    .gifts-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      color: #6b7c5e;
+      letter-spacing: 2px;
+      margin-bottom: 2px;
+      font-weight: 700;
+    }
+    .gifts-subtitle {
+      font-family: 'Marck Script', cursive;
+      font-size: 1.1rem;
+      color: #a6a68a;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .gifts-text {
+      font-size: 1.08rem;
+      color: #6d5c43;
+      font-family: 'Marck Script', cursive;
+      line-height: 1.4;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    /* ===== FINAL PHOTO SECTION ===== */
+    .final-photo-section {
+      text-align: center;
+      margin: 0 0 32px 0;
+    }
+    .final-photo {
+      width: 90%;
+      max-width: 340px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 24px;
+      border: 4px solid #e2c9a0;
+      background: #e2c9a0;
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 600px) {
+      .vintage-frame { margin: 8px 2px 0 2px; }
+      .header-photo, .final-photo { width: 98vw; max-width: 340px; }
+    }
+    @media (max-width: 400px) {
+      .header-photo, .final-photo { width: 98vw; max-width: 98vw; }
+      .vintage-frame { padding: 6px 0 0 0; }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ===== GREETING SECTION ===== */
+    .greeting-section {
+      text-align: center;
+      margin: 0 0 24px 0;
+      padding: 0 18px;
+    }
+    .greeting-title {
+      font-size: 1.3rem;
+      color: #6d5c43;
+      font-family: 'Marck Script', cursive;
+      line-height: 1.4;
+      margin: 0 0 12px 0;
+      font-weight: 600;
+    }
+    .greeting-text {
+      font-size: 1.08rem;
+      color: #6d5c43;
+      font-family: 'Marck Script', cursive;
+      line-height: 1.4;
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
-    <div class="page-container">
-        <div class="content-wrapper">
-            <!-- Первая страница - Hero секция -->
-            <section class="hero-section">
-                <div class="hero-content">
-                    <h1 class="couple-names">Богдан & Іра</h1>
-                    <p class="wedding-date">23.08.2025</p>
-                </div>
-                <div class="scroll-indicator"></div>
-            </section>
-
-            <!-- Вторая страница - Информация о свадьбе -->
-            <section class="info-section">
-                <div class="container">
-                    <div class="welcome-text">
-                        <h2>Дорогі друзі та родина!</h2>
-                        <p>Ми з радістю запрошуємо вас приєднатися до нас на святкування нашого весілля. Цей день буде сповнений любовʼю, сміхом і спогадами, які ми хочемо розділити з вами.</p>
-                    </div>
-                    
-                    <div class="countdown-section">
-                        <h3>До нашого особливого дня залишилося:</h3>
-                        <div class="countdown-timer">
-                            <div class="countdown-item">
-                                <span class="countdown-number" id="days">00</span>
-                                <span class="countdown-label">ДНІВ</span>
-                            </div>
-                            <div class="countdown-item">
-                                <span class="countdown-number" id="hours">00</span>
-                                <span class="countdown-label">ГОДИН</span>
-                            </div>
-                            <div class="countdown-item">
-                                <span class="countdown-number" id="minutes">00</span>
-                                <span class="countdown-label">ХВИЛИН</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="calendar-section">
-                        <h3>Дата нашого весілля</h3>
-                        <div class="calendar">
-                            <div class="calendar-header">
-                                <span class="month">Серпень 2025</span>
-                            </div>
-                            <div class="calendar-weekdays">
-                                <span>Пн</span>
-                                <span>Вт</span>
-                                <span>Ср</span>
-                                <span>Чт</span>
-                                <span>Пт</span>
-                                <span>Сб</span>
-                                <span>Нд</span>
-                            </div>
-                            <div class="calendar-days">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span>1</span>
-                                <span>2</span>
-                                <span>3</span>
-                                <span>4</span>
-                                <span>5</span>
-                                <span>6</span>
-                                <span>7</span>
-                                <span>8</span>
-                                <span>9</span>
-                                <span>10</span>
-                                <span>11</span>
-                                <span>12</span>
-                                <span>13</span>
-                                <span>14</span>
-                                <span>15</span>
-                                <span>16</span>
-                                <span>17</span>
-                                <span>18</span>
-                                <span>19</span>
-                                <span>20</span>
-                                <span>21</span>
-                                <span>22</span>
-                                <span class="wedding-day">23</span>
-                                <span>24</span>
-                                <span>25</span>
-                                <span>26</span>
-                                <span>27</span>
-                                <span>28</span>
-                                <span>29</span>
-                                <span>30</span>
-                                <span>31</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Третья страница - Локация и расписание -->
-            <section class="location-section">
-                <div class="container">
-                    <div class="location-content">
-                        <h2>Локація нашого весілля</h2>
-                        
-                        <div class="address-info">
-                            <h3>Ресторан Secret Forest</h3>
-                            <p class="address">вулиця Ярославська, 39, Білогородка, Київська область</p>
-                            
-                            <a href="https://maps.app.goo.gl/1k8BZSDzBMKvFTaG6" 
-                               target="_blank" 
-                               class="map-button">
-                                <span class="map-icon">📍</span>
-                                Відкрити на Google Maps
-                            </a>
-                        </div>
-                        
-                        <div class="schedule-section">
-                            <h3>Програма весілля</h3>
-                            <div class="schedule-table">
-                                <div class="schedule-item">
-                                    <span class="time">14:00</span>
-                                    <span class="event">Церемонія</span>
-                                </div>
-                                <div class="schedule-item">
-                                    <span class="time">14:30</span>
-                                    <span class="event">Фотосесія з молодими</span>
-                                </div>
-                                <div class="schedule-item">
-                                    <span class="time">15:00</span>
-                                    <span class="event">Банкет</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="final-invitation">
-                            <div class="invitation-image">
-                                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
-                                     alt="Свадебная фотография" 
-                                     class="final-photo">
-                            </div>
-                            <p class="invitation-text">З радістю будемо чекати Вас</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+  <div class="vintage-frame fade-in">
+    <section class="header">
+      <div class="header-photo-container">
+        <img src="resources/photo_2025-07-20_23-25-08.jpg" alt="Богдан та Іра" class="header-photo">
+        <div class="header-content">
+          <div class="header-names">Богдан та Іра</div>
+          <div class="header-date">23.08.2025</div>
         </div>
-    </div>
-
-    <!-- Здесь будут добавлены следующие страницы -->
-    
-    <script>
-        // Счетчик времени до свадьбы
-        function updateCountdown() {
-            const weddingDate = new Date('2025-08-23T00:00:00');
-            const now = new Date();
-            const difference = weddingDate - now;
-
-            if (difference > 0) {
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-
-                document.getElementById('days').textContent = days.toString().padStart(2, '0');
-                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            } else {
-                // Если свадьба уже прошла
-                document.getElementById('days').textContent = '00';
-                document.getElementById('hours').textContent = '00';
-                document.getElementById('minutes').textContent = '00';
-            }
+      </div>
+    </section>
+    <section class="greeting-section fade-in">
+      <div class="greeting-title">Дорогі друзі, рідні та близькі!</div>
+      <div class="greeting-text">
+        Ми щасливі запросити вас на наше весілля.
+        Для нас дуже важливо, щоб ви змогли розділити з нами найщасливішу мить у нашому житті.
+        Подаруйте нам радість своєю присутністю!
+      </div>
+    </section>
+    <section class="calendar-section fade-in">
+      <div class="calendar-header">
+        <div class="calendar-month">Серпень</div>
+      </div>
+      <div class="calendar-table">
+        <table>
+          <tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>нд</th></tr>
+          <tr><td></td><td></td><td></td><td></td><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+          <tr><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td></tr>
+          <tr><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td class="heart">
+            23
+            <svg viewBox="0 0 24 24" class="heart-line">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#d14c3b" stroke-width="0.75" stroke-linecap="round"/>
+            </svg>
+          </td><td>24</td></tr>
+          <tr><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td></tr>
+        </table>
+      </div>
+    </section>
+    <section class="timer-section fade-in">
+      <div class="timer-label">До початку свята залишилось:</div>
+      <div class="timer" id="countdown">
+        <span><span id="days">0</span><span class="timer-unit">днів</span></span>:
+        <span><span id="hours">0</span><span class="timer-unit">год</span></span>:
+        <span><span id="minutes">0</span><span class="timer-unit">хв</span></span>:
+        <span><span id="seconds">0</span><span class="timer-unit">сек</span></span>
+      </div>
+    </section>
+    <section class="venue-section fade-in">
+      <div class="venue-title">ЛОКАЦІЯ</div>
+      <div class="venue-subtitle">Ресторан Secret Forest</div>
+      <div class="venue-photo-wrap">
+        <!-- Замените src на фото локации, если появится -->
+        <img src="resources/restr.jpg" alt="Локація Secret Forest" class="venue-photo">
+        <a class="venue-map-btn-round" href="https://maps.app.goo.gl/1k8BZSDzBMKvFTaG6" target="_blank">відкрити карту</a>
+      </div>
+    </section>
+    <section class="dresscode-section fade-in">
+      <div class="dresscode-title">ДРЕС-КОД</div>
+      <div class="dresscode-subtitle">dress</div>
+      <div class="dresscode-text">
+        Ми дуже старалися зробити свято красивим. Тому будемо раді, якщо в своїх нарядах ви підтримаєте кольорову гаму нашого торжества!
+      </div>
+      <div class="dresscode-colors">
+        <div class="color-circle" style="background: #e8dcc8;"></div>
+        <div class="color-circle" style="background: #d4b898;"></div>
+        <div class="color-circle" style="background: #a8c4d8;"></div>
+        <div class="color-circle" style="background: #98a8b8;"></div>
+        <div class="color-circle" style="background: #7a8b98;"></div>
+        <div class="color-circle" style="background: #f0e8d8;"></div>
+        <div class="color-circle" style="background: #c4b898;"></div>
+        <div class="color-circle" style="background: #a89888;"></div>
+        <div class="color-circle" style="background: #7a5a3a;"></div>
+        <div class="color-circle" style="background: #5a6a4a;"></div>
+      </div>
+    </section>
+    <section class="schedule-section fade-in">
+      <div class="schedule-title">ПРОГРАМА ДНЯ</div>
+      <div class="schedule-subtitle">timing</div>
+      <div class="schedule-list">
+        <div class="schedule-pill">
+          <div class="schedule-time">14:00</div>
+          <div class="schedule-desc">ЗБІР ГОСТЕЙ</div>
+        </div>
+        <div class="schedule-pill">
+          <div class="schedule-time">14:15</div>
+          <div class="schedule-desc">ЦЕРЕМОНІЯ</div>
+        </div>
+        <div class="schedule-pill">
+          <div class="schedule-time">15:00</div>
+          <div class="schedule-desc">БАНКЕТ</div>
+        </div>
+      </div>
+    </section>
+    <section class="gifts-section fade-in">
+      <div class="gifts-title">ПОДАРКИ</div>
+      <div class="gifts-subtitle">gifts</div>
+      <div class="gifts-text">
+        Просимо не обтяжувати себе вибором квітів та подарунків, найкращий подарунок для нас — ваша присутність та теплі слова. Якщо хочете преподнести цінний та потрібний подарунок, ми будемо дуже вдячні за внесок у бюджет нашої молодої сім'ї.<br><br>
+        І зовсім не важливо, в який конверт ви його запакуєте!
+      </div>
+    </section>
+    <section class="final-photo-section fade-in">
+      <!-- Велике романтичне фото пари (замінити src на потрібне фото) -->
+      <img src="resources/photo_2025-07-20_23-25-08.jpg" alt="Love Story Богдан та Іра" class="final-photo">
+    </section>
+  </div>
+  <script>
+    // Таймер зворотного відліку
+    function updateCountdown() {
+      const eventDate = new Date('2025-08-23T14:00:00+03:00');
+      const now = new Date();
+      let diff = eventDate - now;
+      if (diff < 0) diff = 0;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+    // Плавне появление блоков при прокрутке
+    function onScrollFadeIn() {
+      document.querySelectorAll('.fade-in').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 40) {
+          el.classList.add('visible');
         }
-
-        // Обновляем счетчик каждую минуту
-        updateCountdown();
-        setInterval(updateCountdown, 60000);
-    </script>
+      });
+    }
+    window.addEventListener('scroll', onScrollFadeIn);
+    window.addEventListener('DOMContentLoaded', onScrollFadeIn);
+  </script>
+  <!--
+    Для замены фото и адреса ресторана просто замените src и текст в соответствующих секциях.
+    Для изменения даты — поменяйте дату в блоке .header-date, календаре і таймере.
+    Все тексты легко редактируются прямо в html.
+  -->
 </body>
 </html>
