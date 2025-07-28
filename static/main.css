@@ -430,7 +430,7 @@ body {
 .initials {
   display: flex;
   align-items: center;
-  font-size: 4rem;
+  font-size: 3rem;
   color: #fff;
   opacity: 0;
   transform: translateY(-30px);
