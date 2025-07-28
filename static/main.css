@@ -375,7 +375,15 @@ body {
 
 @media (max-width: 600px) {
   .vintage-frame { margin: 8px 2px 0 2px; }
-  .header-photo, .final-photo { width: 98vw; max-width: 340px; }
+  .header-photo {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+    display: block;
+  }
+  .final-photo { width: 98vw; max-width: 340px; }
 }
 @media (max-width: 400px) {
   .header-photo, .final-photo { width: 98vw; max-width: 98vw; }
